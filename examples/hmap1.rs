@@ -1,16 +1,15 @@
-use std::env;
-use futures::{sink::SinkExt, stream::StreamExt};
+use futures::{sink::SinkExt};
 use redis_async::{client, resp_array};
+use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 
 #[tokio::main]
 async fn main() {
-    let addr = env::args()
-        .nth(1)
-        .unwrap_or_else(|| "127.0.0.1:6379".to_string())
-        .parse()
-        .expect("Cannot parse Redis connection string");
 
-    let mut connection = client::connect(&addr)
+    let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 6379);
+    assert_eq!("127.0.0.1:6379".parse(), Ok(socket));
+    // let addr1 = socket;
+
+    let mut connection = client::connect(&socket)
         .await
         .expect("Cannot connect to Redis");
     connection
