@@ -20,15 +20,13 @@ async fn main() {
 
     let futures = test_data.into_iter().map(|data| {
         let connection_inner = connection.clone();
-        let incr_f = connection.send(resp_array!["INCR", "realistic_test_ctr"]);
+//      let incr_f = connection.send(resp_array!["INCR", "realistic_test_ctr"]);
         async move {
-            let ctr: String = incr_f.await.expect("Cannot increment");
+//            let ctr: String = incr_f.await.expect("Cannot increment");
 
-            let key = format!("rt_{}", ctr);
-            let d_val = data.0.to_string();
-            connection_inner.send_and_forget(resp_array!["SET", &key, d_val]);
+            connection_inner.send_and_forget(resp_array!["SET", "or", "corvallis"]);
             connection_inner
-                .send(resp_array!["SET", data.1, key])
+                .send(resp_array!["SET", "nm", "raton 1"])
                 .await
                 .expect("Cannot set")
         }
