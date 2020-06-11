@@ -7,7 +7,6 @@ async fn main() {
 
     let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 6379);
     assert_eq!("127.0.0.1:6379".parse(), Ok(socket));
-    // let addr1 = socket;
 
     let mut connection = client::connect(&socket)
         .await
@@ -15,5 +14,5 @@ async fn main() {
     connection
         .send(resp_array!["SET", "nm", "raton 1"])
         .await
-        .expect("Cannot send MONITOR command");
+        .expect("Cannot send SET command");
 }
