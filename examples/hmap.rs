@@ -5,7 +5,7 @@ use redis_async::{client, resp_array};
 #[tokio::main]
 async fn main() {
     // Create some completely arbitrary "test data"
-    let test_data_size = 10;
+    let test_data_size = 3;
     let test_data: Vec<_> = (0..test_data_size).map(|x| (x, x.to_string())).collect();
 
     let addr = env::args()
@@ -20,10 +20,7 @@ async fn main() {
 
     let futures = test_data.into_iter().map(|data| {
         let connection_inner = connection.clone();
-//      let incr_f = connection.send(resp_array!["INCR", "realistic_test_ctr"]);
         async move {
-//            let ctr: String = incr_f.await.expect("Cannot increment");
-
             connection_inner.send_and_forget(resp_array!["SET", "or", "corvallis"]);
             connection_inner
                 .send(resp_array!["SET", "nm", "raton 1"])
