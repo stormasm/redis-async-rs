@@ -24,5 +24,25 @@ async fn main() {
     assert_eq!(result_1, "Rick");
     assert_eq!(result_2, "1234");
 
+    // Now lets work on taking a string from the terminal
+    // and munging it into vec which is the input to the resp_array
 
+    let myiter = "set y 5678".split_whitespace();
+
+    let myvec = myiter
+        .map(|item| {
+            item
+        })
+        .collect::<Vec<_>>();
+
+    assert_eq!(myvec,vec!["set", "y", "5678"]);
+
+    let command = resp_array![].append(myvec);
+
+//  connection.send_and_forget(resp_array!["SET", "y", "5678"]);
+    connection.send_and_forget(command);
+
+    let wait_g = connection.send(resp_array!["GET", "y"]);
+    let result_3: String = wait_g.await.expect("Cannot read result of third thing");
+    assert_eq!(result_3, "5678");
 }
