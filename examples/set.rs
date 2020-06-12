@@ -1,3 +1,6 @@
+// This uses connect instead of paired_connect
+// which is shown in the example setpc.rs
+
 use futures::{sink::SinkExt};
 use redis_async::{client, resp_array};
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
