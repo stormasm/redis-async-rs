@@ -5,10 +5,10 @@ use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 #[tokio::main]
 async fn main() {
 
-    let socket = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 6379);
-    assert_eq!("127.0.0.1:6379".parse(), Ok(socket));
+    let addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(127, 0, 0, 1)), 6379);
+    assert_eq!("127.0.0.1:6379".parse(), Ok(addr));
 
-    let mut connection = client::connect(&socket)
+    let mut connection = client::connect(&addr)
         .await
         .expect("Cannot connect to Redis");
     connection
